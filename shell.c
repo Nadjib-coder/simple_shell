@@ -13,7 +13,6 @@
 void execute_command(const char *command)
 {
 	pid_t pid = fork();
-	int status;
 
 	if (pid < 0)
 	{
