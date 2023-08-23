@@ -24,7 +24,7 @@ void execute_command(const char *command)
 		/* Child process */
 		char *envp[] = {NULL}; /* Empty environment */
 		char *args[2];
-	       	
+
 		args[0] = strdup(command);
 		args[1] = NULL;
 		execve(command, args, envp);
