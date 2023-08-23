@@ -18,6 +18,7 @@ void execute_command(const char *command)
 	if (pid < 0)
 	{
 		perror("Fork failed");
+		exit(1);
 	}
 	else if (pid == 0)
 	{
@@ -60,8 +61,8 @@ int main(void)
 		read = getline(&input, &input_size, stdin);
 		if (read == -1)
 		{
-			printf("Exiting shell...\n");
-			break; /* Exit on Ctrl+D or error */
+			perror("Exiting shell...");
+			exit(1); /* Exit on Ctrl+D or error */
 		}
 		if (read > 0 && input[read - 1] == '\n')
 		{
