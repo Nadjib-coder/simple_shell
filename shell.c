@@ -22,10 +22,11 @@ void execute_command(const char *command)
 	else if (pid == 0)
 	{
 		/* Child process */
-		char *args[] = {strdup(command), NULL};
-		/* Command and NULL-terminated array */
 		char *envp[] = {NULL}; /* Empty environment */
-
+		char *args[2];
+	       	
+		args[0] = strdup(command);
+		args[1] = NULL;
 		execve(command, args, envp);
 		/* execve only returns if an error occurs */
 		fprintf(stderr, "Exec failed for command: %s\n", command);
