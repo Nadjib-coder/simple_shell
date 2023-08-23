@@ -5,74 +5,45 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-/**
- * execute_command - a function that execute a command
- * @command: the path of the command
- * Return: nothing.
- */
-void execute_command(const char *command)
-{
-	pid_t pid = fork();
-	int status;
+#define MAX_INPUT_LENGTH 100
 
-	if (pid < 0)
-	{
-		perror("Fork failed");
-		exit(1);
-	}
-	else if (pid == 0)
-	{
-		/* Child process */
-		char *envp[] = {NULL}; /* Empty environment */
-		char *args[2];
+int main(void) {
+    char input[MAX_INPUT_LENGTH];
+    char prompt[] = "#cisfun$ ";
+    pid_t child_pid;
 
-		args[0] = strdup(command);
-		args[1] = NULL;
-		execve(command, args, envp);
-		/* execve only returns if an error occurs */
-		fprintf(stderr, "Exec failed for command: %s\n", command);
-		exit(EXIT_FAILURE);
-	}
-	else
-	{
-		/* Parent process */
-		wait(&status);
-		if (WIFEXITED(status))
-		{
-		printf("child process exited with status %d\n", WEXITSTATUS(status));
-		}
-	}
-}
+    while (1) {
+        printf("%s", prompt);
 
-/**
- * main - entry point of a super simple shell
- * Return: 0 (Sucess);
- */
-int main(void)
-{
-	char *input = NULL;
-	size_t input_size = 0;
-	ssize_t read;
+        if (fgets(input, sizeof(input), stdin) == NULL) {
+            printf("\n");
+            break;
+        }
 
-	while (1)
-	{
-		printf("shell> ");
-		fflush(stdout);
-		read = getline(&input, &input_size, stdin);
-		if (read == -1)
-		{
-			perror("Exiting shell...");
-			exit(1); /* Exit on Ctrl+D or error */
-		}
-		if (read > 0 && input[read - 1] == '\n')
-		{
-			input[read - 1] = '\0';
-		}
-		/* Execute the command */
-		execute_command(input);
-	}
-	/* Free allocated memory */
-	free(input);
-	return (0);
+        input[strcspn(input, "\n")] = '\0';
+
+        child_pid = fork();
+
+        if (child_pid == -1) {
+            perror("fork");
+            exit(EXIT_FAILURE);
+        } else if (child_pid == 0) {
+            execlp(input, input, NULL);
+            perror("execlp");
+            exit(EXIT_FAILURE);
+        } else {
+            int status;
+            waitpid(child_pid, &status, 0);
+
+            if (WIFEXITED(status)) {
+                int exit_status = WEXITSTATUS(status);
+                if (exit_status != 0) {
+                    fprintf(stderr, "%s: Command '%s' exited with status %d\n", prompt, input, exit_status);
+                }
+            }
+        }
+    }
+
+    return 0;
 }
 
