@@ -17,7 +17,6 @@ void execute_command(const char *command)
 	if (pid < 0)
 	{
 		perror("Fork failed");
-		exit(1);
 	}
 	else if (pid == 0)
 	{
