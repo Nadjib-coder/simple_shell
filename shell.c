@@ -20,7 +20,6 @@ int main(int __attribute__((unused))argc, char *argv[])
 	{
 		prompt = interactive ? "($) " : "";
 		printf("%s", prompt);
-		fflush(stdout);
 
 		read = getline(&input, &input_size, stdin);
 		if (read == -1)

@@ -25,8 +25,8 @@ void execute_command(const char *program_name, const char *command)
 		args[1] = NULL;
 		execve(command, args, envp);
 
-		free(args[0]);
 		perror(program_name);
+		free(args[0]);
 		exit(EXIT_FAILURE);
 	}
 	else
