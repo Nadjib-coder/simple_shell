@@ -12,7 +12,7 @@ int main(void)
 
 	while (1)
 	{
-		printf("shell> ");
+		printf("#cisfun$ ");
 		fflush(stdout);
 		read = getline(&input, &input_size, stdin);
 		if (read == -1)
