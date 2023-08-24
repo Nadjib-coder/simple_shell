@@ -1,4 +1,5 @@
 #include "shell.h"
+#include <libgen.h>
 
 /**
  * execute_command - a function that execute a command
@@ -8,12 +9,13 @@
  */
 void execute_command(const char *program_name, const char *command)
 {
+	int status;
 	pid_t pid = fork();
 
 	if (pid < 0)
 	{
 		perror("Fork failed");
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	else if (pid == 0)
 	{
@@ -36,7 +38,16 @@ void execute_command(const char *program_name, const char *command)
 	else
 	{
 		/* Parent process */
-		wait(NULL);
+		wait(&status);
+		if (WIFEXITED(status) && WEXITSTATUS(status) == 127)
+		{
+			char *executable = strdup(command);
+			char *base = basename(executable);
+
+			fprintf(stderr, "%s: %s: %s\n", program_name, base, "command not found");
+
+			free(executable);
+		}
 	}
 }
 

@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <libgen.h>
 
 /* function declaration */
 void execute_command(const char *program_name, const char *command);

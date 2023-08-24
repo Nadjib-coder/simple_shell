@@ -39,7 +39,6 @@ int main(int __attribute__((unused))argc, char *argv[])
 
 	/* Free allocated memory */
 	free(input);
-
 	return (0);
 }
 
