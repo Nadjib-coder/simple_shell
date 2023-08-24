@@ -9,6 +9,6 @@
 #include <sys/wait.h>
 
 /* function declaration */
-void execute_command(const char *command);
+void execute_command(const char *program_name, const char *command);
 
 #endif

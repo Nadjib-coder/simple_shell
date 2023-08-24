@@ -5,7 +5,7 @@
  * @command: the path of the command
  * Return: nothing.
  */
-void execute_command(const char *command)
+void execute_command(const char *program_name, const char *command)
 {
 	pid_t pid = fork();
 
@@ -23,9 +23,13 @@ void execute_command(const char *command)
 		args[0] = strdup(command);
 		args[1] = NULL;
 		execve(command, args, envp);
+
 		/* free the memory allocated by strdup */
 		free(args[0]);
-		perror("./hsh");
+
+		/* printf error message withe program's name */
+		perror(program_name);
+
 		exit(EXIT_FAILURE);
 	}
 	else
