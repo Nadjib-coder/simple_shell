@@ -19,7 +19,6 @@ int main(int __attribute__((unused))argc, char *argv[])
 	while (1)
 	{
 		prompt = interactive ? "($) " : "";
-		
 		printf("%s", prompt);
 		fflush(stdout);
 

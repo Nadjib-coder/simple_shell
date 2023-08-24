@@ -2,6 +2,7 @@
 
 /**
  * execute_command - a function that execute a command
+ * @program_name: the program name.
  * @command: the path of the command
  * Return: nothing.
  */
