@@ -24,8 +24,7 @@ void execute_command(const char *program_name, const char *command)
 		args[0] = strdup(command);
 		args[1] = NULL;
 		execve(command, args, envp);
-
-		perror(program_name);
+		fprintf(stderr, "%s: %d: %s: not found\n ", program_name, 1, command);
 		free(args[0]);
 		exit(EXIT_FAILURE);
 	}
