@@ -10,6 +10,7 @@
 #include <ctype.h>
 
 /* function declaration */
-void execute_command(const char *program_name, const char *command, int command_number);
+void execute_command(const char *program_name, const char *command,
+		int command_number);
 
 #endif
