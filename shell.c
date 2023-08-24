@@ -18,6 +18,9 @@ int main(int __attribute__((unused))argc, char *argv[])
 
 	while (1)
 	{
+		int is_empty = 1;
+		size_t i;
+
 		prompt = interactive ? "($) " : "";
 		printf("%s", prompt);
 
@@ -32,6 +35,23 @@ int main(int __attribute__((unused))argc, char *argv[])
 			input[read - 1] = '\0';
 		}
 
+		for (i = 0; i < strlen(input); i++)
+		{
+			if (!isspace(input[i]))
+			{
+				is_empty = 0;
+				break;
+			}
+		}
+		if (is_empty)
+		{
+			continue;
+		}
+
+		if (strcmp(input, "exit") == 0)
+		{
+			break;
+		}
 		/* Execute the command */
 		execute_command(argv[0], input);
 	}
