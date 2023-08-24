@@ -8,7 +8,6 @@
 void execute_command(const char *command)
 {
 	pid_t pid = fork();
-	int status;
 
 	if (pid < 0)
 	{
@@ -26,18 +25,13 @@ void execute_command(const char *command)
 		execve(command, args, envp);
 		/* free the memory allocated by strdup */
 		free(args[0]);
-		/* execve only returns if an error occurs */
-		perror("Exec failed");
+		perror("./hsh");
 		exit(EXIT_FAILURE);
 	}
 	else
 	{
 		/* Parent process */
-		wait(&status);
-		if (WIFEXITED(status))
-		{
-			printf("child process exited with status %d\n", WEXITSTATUS(status));
-		}
+		wait(NULL);
 	}
 }
 
