@@ -17,8 +17,7 @@ int main(void)
 		read = getline(&input, &input_size, stdin);
 		if (read == -1)
 		{
-			perror("Exiting shell...");
-			exit(1); /* Exit on Ctrl+D or error */
+			break; /* Exit on Ctrl+D or error */
 		}
 		if (read > 0 && input[read - 1] == '\n')
 		{
