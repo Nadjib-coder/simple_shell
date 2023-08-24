@@ -29,8 +29,10 @@ void execute_command(const char *command)
 		args[0] = strdup(command);
 		args[1] = NULL;
 		execve(command, args, envp);
+		/* free the memory allocated by strdup */
+		free(args[0]);
 		/* execve only returns if an error occurs */
-		fprintf(stderr, "Exec failed for command: %s\n", command);
+		perror("Exec failed");
 		exit(EXIT_FAILURE);
 	}
 	else
