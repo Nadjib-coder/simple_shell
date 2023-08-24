@@ -15,7 +15,6 @@ int main(int __attribute__((unused))argc, char *argv[])
 	int interactive;
 
 	interactive = isatty(STDIN_FILENO);
-
 	while (1)
 	{
 		int is_empty = 1;
@@ -23,17 +22,11 @@ int main(int __attribute__((unused))argc, char *argv[])
 
 		prompt = interactive ? "($) " : "";
 		printf("%s", prompt);
-
 		read = getline(&input, &input_size, stdin);
 		if (read == -1)
-		{
 			break; /* Exit on Ctrl+D or error */
-		}
-
 		if (read > 0 && input[read - 1] == '\n')
-		{
 			input[read - 1] = '\0';
-		}
 
 		for (i = 0; i < strlen(input); i++)
 		{
@@ -44,19 +37,11 @@ int main(int __attribute__((unused))argc, char *argv[])
 			}
 		}
 		if (is_empty)
-		{
 			continue;
-		}
-
 		if (strcmp(input, "exit") == 0)
-		{
 			break;
-		}
-		/* Execute the command */
 		execute_command(argv[0], input);
 	}
-
-	/* Free allocated memory */
 	free(input);
 	return (0);
 }
