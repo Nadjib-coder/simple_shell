@@ -12,7 +12,7 @@ int main(int __attribute__((unused))argc, char *argv[])
 	size_t input_size = 0;
 	ssize_t read;
 	char *prompt;
-	int interactive;
+	int interactive, command_number = 1;
 
 	interactive = isatty(STDIN_FILENO);
 	while (1)
@@ -40,7 +40,8 @@ int main(int __attribute__((unused))argc, char *argv[])
 			continue;
 		if (strcmp(input, "exit") == 0)
 			break;
-		execute_command(argv[0], input);
+		execute_command(argv[0], input, command_number);
+		command_number++;
 	}
 	free(input);
 	return (0);

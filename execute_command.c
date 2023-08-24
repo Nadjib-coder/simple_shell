@@ -6,7 +6,7 @@
  * @command: the path of the command
  * Return: nothing.
  */
-void execute_command(const char *program_name, const char *command)
+void execute_command(const char *program_name, const char *command, int command_number)
 {
 	pid_t pid = fork();
 
@@ -24,7 +24,7 @@ void execute_command(const char *program_name, const char *command)
 		args[0] = strdup(command);
 		args[1] = NULL;
 		execve(command, args, envp);
-		fprintf(stderr, "%s: %d: %s: not found\n ", program_name, 1, command);
+		fprintf(stderr, "%s: %d: %s: not found\n ", program_name, command_number, command);
 		free(args[0]);
 		exit(EXIT_FAILURE);
 	}
