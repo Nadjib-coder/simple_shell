@@ -1,77 +1,48 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-
-/**
- * execute_command - a function that execute a command
- * @command: the path of the command
- * Return: nothing.
- */
-void execute_command(const char *command)
-{
-	pid_t pid = fork();
-	int status;
-
-	if (pid < 0)
-	{
-		perror("Fork failed");
-		exit(1);
-	}
-	else if (pid == 0)
-	{
-		/* Child process */
-		char *envp[] = {NULL}; /* Empty environment */
-		char *args[2];
-
-		args[0] = strdup(command);
-		args[1] = NULL;
-		execve(command, args, envp);
-		/* execve only returns if an error occurs */
-		fprintf(stderr, "Exec failed for command: %s\n", command);
-		exit(EXIT_FAILURE);
-	}
-	else
-	{
-		/* Parent process */
-		wait(&status);
-		if (WIFEXITED(status))
-		{
-		printf("child process exited with status %d\n", WEXITSTATUS(status));
-		}
-	}
-}
+#include "shell.h"
 
 /**
  * main - entry point of a super simple shell
+ * @argc: the number of argument
+ * @argv: the argument
  * Return: 0 (Sucess);
  */
-int main(void)
+int main(int __attribute__((unused))argc, char *argv[])
 {
 	char *input = NULL;
 	size_t input_size = 0;
 	ssize_t read;
+	char *prompt;
+	int interactive, command_number = 1;
 
+	interactive = isatty(STDIN_FILENO);
 	while (1)
 	{
-		printf("shell> ");
-		fflush(stdout);
+		int is_empty = 1;
+		size_t i;
+
+		prompt = interactive ? "($) " : "";
+		printf("%s", prompt);
 		read = getline(&input, &input_size, stdin);
 		if (read == -1)
-		{
-			perror("Exiting shell...");
-			exit(1); /* Exit on Ctrl+D or error */
-		}
+			break; /* Exit on Ctrl+D or error */
 		if (read > 0 && input[read - 1] == '\n')
-		{
 			input[read - 1] = '\0';
+
+		for (i = 0; i < strlen(input); i++)
+		{
+			if (!isspace(input[i]))
+			{
+				is_empty = 0;
+				break;
+			}
 		}
-		/* Execute the command */
-		execute_command(input);
+		if (is_empty)
+			continue;
+		if (strcmp(input, "exit") == 0)
+			break;
+		execute_command(argv[0], input, command_number);
+		command_number++;
 	}
-	/* Free allocated memory */
 	free(input);
 	return (0);
 }
