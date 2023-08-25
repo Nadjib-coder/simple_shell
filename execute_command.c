@@ -15,8 +15,8 @@ void execute_command(const char *prg_name, char *const args[], int cmd_num)
 	{
 		fprintf(stderr, "%s: %d: %s: not found\n", prg_name, cmd_num, args[0]);
 		return;
-	}	
-	pid = fork();	
+	}
+	pid = fork();
 	if (pid < 0)
 	{
 		perror("Fork failed");
