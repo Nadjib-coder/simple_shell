@@ -11,12 +11,15 @@ void execute_command(const char *prg_name, char *const args[], int cmd_num)
 {
 	pid_t pid;
 
-	if (access(args[0], X_OK) == -1)
+	if (access(args[0], X_OK) == 0)
+	{
+		pid = fork();
+	}
+	else
 	{
 		fprintf(stderr, "%s: %d: %s: not found\n", prg_name, cmd_num, args[0]);
 		return;
 	}
-	pid = fork();
 	if (pid < 0)
 	{
 		perror("Fork failed");
