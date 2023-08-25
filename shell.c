@@ -38,10 +38,7 @@ int main(int __attribute__((unused))argc, char *argv[])
 		if (is_empty)
 			continue;
 		if (strcmp(input, "exit") == 0)
-		{
-			printf("Exiting the shell..\n");
 			break;
-		}
 		split_input(input, cmd_args);
 		execute_command(argv[0], cmd_args, cmd_num);
 		cmd_num++;
