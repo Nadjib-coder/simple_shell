@@ -9,6 +9,7 @@
  */
 void execute_command(const char *prg_name, char *const args[], int cmd_num)
 {
+	/*
 	pid_t pid;
 
 	if (access(args[0], X_OK) == 0)
@@ -20,6 +21,8 @@ void execute_command(const char *prg_name, char *const args[], int cmd_num)
 		fprintf(stderr, "%s: %d: %s: not found\n", prg_name, cmd_num, args[0]);
 		return;
 	}
+	*/
+	pid_t pid = fork();
 	if (pid < 0)
 	{
 		perror("Fork failed");
