@@ -10,6 +10,7 @@
 void execute_command(const char *prg_name, char *const args[], int cmd_num)
 {
 	pid_t pid = fork();
+
 	if (pid < 0)
 	{
 		perror("Fork failed");
