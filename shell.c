@@ -11,10 +11,8 @@ int main(int __attribute__((unused))argc, char *argv[])
 	char *input = NULL, *prompt;
 	size_t input_size = 0;
 	ssize_t read;
-	int interactive;
-	int cmd_num = 1;
+	int interactive = isatty(STDIN_FILENO), cmd_num = 1;
 
-	interactive = isatty(STDIN_FILENO);
 	while (1)
 	{
 		int is_empty = 1;
@@ -41,7 +39,7 @@ int main(int __attribute__((unused))argc, char *argv[])
 			continue;
 		if (strcmp(input, "exit") == 0)
 		{
-			printf("Exiting the shell...\n");
+			printf("Exiting the shell..\n");
 			break;
 		}
 		split_input(input, cmd_args);
