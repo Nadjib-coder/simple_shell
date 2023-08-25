@@ -8,26 +8,28 @@
  */
 int main(int __attribute__((unused))argc, char *argv[])
 {
-	char *input = NULL;
+	char *input = NULL, *prompt;
 	size_t input_size = 0;
 	ssize_t read;
-	char *prompt;
-	int interactive, command_number = 1;
+	int interactive;
+	int cmd_num = 1;
 
 	interactive = isatty(STDIN_FILENO);
+
 	while (1)
 	{
 		int is_empty = 1;
+		char *cmd_args[11];
 		size_t i;
 
 		prompt = interactive ? "($) " : "";
 		printf("%s", prompt);
+		fflush(stdout);
 		read = getline(&input, &input_size, stdin);
 		if (read == -1)
-			break; /* Exit on Ctrl+D or error */
+			break;
 		if (read > 0 && input[read - 1] == '\n')
 			input[read - 1] = '\0';
-
 		for (i = 0; i < strlen(input); i++)
 		{
 			if (!isspace(input[i]))
@@ -40,8 +42,9 @@ int main(int __attribute__((unused))argc, char *argv[])
 			continue;
 		if (strcmp(input, "exit") == 0)
 			break;
-		execute_command(argv[0], input, command_number);
-		command_number++;
+		split_input(input, cmd_args);
+		execute_command(argv[0], cmd_args, cmd_num);
+		cmd_num++;
 	}
 	free(input);
 	return (0);

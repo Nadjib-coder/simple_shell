@@ -2,13 +2,12 @@
 
 /**
  * execute_command - a function that execute a command
- * @program_name: the program name.
- * @command: the path of the command
- * @command_number: the number of command that excute
+ * @prg_name: the program name.
+ * @args: the arguments of the command
+ * @cmd_num: the number of command that excute
  * Return: nothing.
  */
-void execute_command(const char *program_name, const char *command,
-		int command_number)
+void execute_command(const char *prg_name, char *const args[], int cmd_num)
 {
 	pid_t pid = fork();
 
@@ -21,14 +20,9 @@ void execute_command(const char *program_name, const char *command,
 	{
 		/* Child process */
 		char *envp[] = {NULL};
-		char *args[2];
 
-		args[0] = strdup(command);
-		args[1] = NULL;
-		execve(command, args, envp);
-		fprintf(stderr, "%s: %d: %s: not found\n ", program_name,
-				command_number, command);
-		free(args[0]);
+		execve(args[0], args, envp);
+		fprintf(stderr, "%s: %d: %s: not found\n ", prg_name, cmd_num, args[0]);
 		exit(EXIT_FAILURE);
 	}
 	else
