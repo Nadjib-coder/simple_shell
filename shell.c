@@ -15,7 +15,6 @@ int main(int __attribute__((unused))argc, char *argv[])
 	int cmd_num = 1;
 
 	interactive = isatty(STDIN_FILENO);
-
 	while (1)
 	{
 		int is_empty = 1;

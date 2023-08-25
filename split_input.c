@@ -9,14 +9,14 @@
  */
 void split_input(char *input, char *cmd_args[])
 {
-	char *token = strtok(input, " ");
+	char *token = strtok(input, " \t");
 	int arg_count = 0;
 
 	while (token != NULL)
 	{
 		cmd_args[arg_count] = token;
 		arg_count++;
-		token = strtok(NULL, " ");
+		token = strtok(NULL, " \t");
 	}
 	cmd_args[arg_count] = NULL;
 }

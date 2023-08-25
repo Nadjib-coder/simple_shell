@@ -12,5 +12,6 @@
 /* function declaration */
 void split_input(char *input, char *cmd_args[]);
 void execute_command(const char *prg_name, char *const args[], int cmd_num);
+int command_exists(const char *command);
 
 #endif
