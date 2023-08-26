@@ -10,6 +10,7 @@
 void execute_command(const char *prg_name, char *const args[], int cmd_num)
 {
 	pid_t pid;
+	int status;
 
 	if (!command_exists(args[0]))
 	{
@@ -26,7 +27,7 @@ void execute_command(const char *prg_name, char *const args[], int cmd_num)
 	{
 		char *envp[] = {NULL}, *path;
 
-		execve(args[0], args, envp);	
+		execve(args[0], args, envp);
 		path = getenv("PATH");
 		if (path != NULL)
 		{
@@ -47,6 +48,6 @@ void execute_command(const char *prg_name, char *const args[], int cmd_num)
 		exit(EXIT_FAILURE);
 	}
 	else
-		wait(NULL);
+		wait(&status);
 }
 
