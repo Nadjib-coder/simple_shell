@@ -29,6 +29,8 @@ int main(int __attribute__((unused))argc, char *argv[])
 			input[read - 1] = '\0';
 		if (strncmp(input, "exit", 4) == 0)
 			break;
+		if (strncmp(input, "env", 3) == 0)
+			print_environment();
 		for (i = 0; i < strlen(input); i++)
 		{
 			if (!isspace(input[i]))
