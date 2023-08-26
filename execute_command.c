@@ -26,13 +26,7 @@ void execute_command(const char *prg_name, char *const args[], int cmd_num)
 	{
 		char *envp[] = {NULL}, *path;
 
-		if (args[0][:4] == "/bin")
-		{
-			execve(args[0], args, envp);
-		}
-		else
-		{
-			
+		execve(args[0], args, envp);	
 		path = getenv("PATH");
 		if (path != NULL)
 		{
@@ -48,7 +42,6 @@ void execute_command(const char *prg_name, char *const args[], int cmd_num)
 				dir = strtok(NULL, ":");
 			}
 			free(path_copy);
-		}
 		}
 		fprintf(stderr, "%s: %d: %s: not found\n ", prg_name, cmd_num, args[0]);
 		exit(EXIT_FAILURE);
