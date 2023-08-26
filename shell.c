@@ -15,9 +15,7 @@ int main(int __attribute__((unused))argc, char *argv[])
 
 	while (1)
 	{
-		int is_empty = 1;
 		char *cmd_args[11];
-		size_t i;
 
 		prompt = interactive ? "($) " : "";
 		printf("%s", prompt);
@@ -30,16 +28,11 @@ int main(int __attribute__((unused))argc, char *argv[])
 		if (strncmp(input, "exit", 4) == 0)
 			break;
 		if (strncmp(input, "env", 3) == 0)
-			print_environment();
-		for (i = 0; i < strlen(input); i++)
 		{
-			if (!isspace(input[i]))
-			{
-				is_empty = 0;
-				break;
-			}
+			print_environment();
+			continue;
 		}
-		if (is_empty)
+		if (is_empty(input))
 			continue;
 		split_input(input, cmd_args);
 		execute_command(argv[0], cmd_args, cmd_num);
