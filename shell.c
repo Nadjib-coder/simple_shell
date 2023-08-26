@@ -27,6 +27,8 @@ int main(int __attribute__((unused))argc, char *argv[])
 			break;
 		if (read > 0 && input[read - 1] == '\n')
 			input[read - 1] = '\0';
+		if (strncmp(input, "exit", 4) == 0)
+			break;
 		for (i = 0; i < strlen(input); i++)
 		{
 			if (!isspace(input[i]))
@@ -37,8 +39,6 @@ int main(int __attribute__((unused))argc, char *argv[])
 		}
 		if (is_empty)
 			continue;
-		if (strcmp(input, "exit") == 0)
-			break;
 		split_input(input, cmd_args);
 		execute_command(argv[0], cmd_args, cmd_num);
 		cmd_num++;
