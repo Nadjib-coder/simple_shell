@@ -8,7 +8,8 @@
  */
 int main(int __attribute__((unused))argc, char *argv[])
 {
-	char *input = NULL, *prompt;
+	char *input = NULL, *prompt,
+	     *args[] = {"/bin/exit/", NULL}, *env[] = {NULL};
 	size_t input_size = 0;
 	ssize_t read;
 	int interactive = isatty(STDIN_FILENO), cmd_num = 1;
@@ -26,7 +27,7 @@ int main(int __attribute__((unused))argc, char *argv[])
 		if (read > 0 && input[read - 1] == '\n')
 			input[read - 1] = '\0';
 		if (strncmp(input, "exit", 4) == 0)
-			break;
+			exit(0);
 		if (strncmp(input, "env", 3) == 0)
 		{
 			print_environment();
@@ -38,6 +39,7 @@ int main(int __attribute__((unused))argc, char *argv[])
 		execute_command(argv[0], cmd_args, cmd_num);
 		cmd_num++;
 	}
+	execve("/bin/exit/", args, env);
 	free(input);
 	return (0);
 }
