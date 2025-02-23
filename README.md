@@ -1,58 +1,45 @@
-0x16. C - Simple Shell
+# Simple Shell
 
-Tasks
-0. Betty would be proud
-mandatory
-Write a beautiful code that passes the Betty checks
+## Description
+**Simple Shell** is a basic UNIX command-line interpreter written in C. It mimics some of the core functionalities of a typical shell environment, providing users with an interface to execute commands and navigate their system. This project was built as part of the **ALX Software Engineering Program**, focusing on the fundamentals of system programming and process management.
 
-1. Simple shell 0.1
-mandatory
-Write a UNIX command line interpreter.
+---
 
-Usage: simple_shell
-Your Shell should:
+## Features
+The Simple Shell supports the following functionalities:
 
-Display a prompt and wait for the user to type a command. A command line always ends with a new line.
-The prompt is displayed again each time a command has been executed.
-The command lines are simple, no semicolons, no pipes, no redirections or any other advanced features.
-The command lines are made only of one word. No arguments will be passed to programs.
-If an executable cannot be found, print an error message and display the prompt again.
-Handle errors.
-You have to handle the “end of file” condition (Ctrl+D)
-You don’t have to:
+### Basic Features
+- Display a prompt and wait for user input.
+- Execute commands typed by the user.
+- Handle simple command lines without advanced features (e.g., pipes, semicolons, redirection).
+- Provide error messages for invalid commands.
+- Handle the "end of file" condition (`Ctrl+D`) gracefully.
 
-use the PATH
-implement built-ins
-handle special characters : ", ', `, \, *, &, #
-be able to move the cursor
-handle commands with arguments
-execve will be the core part of your Shell, don’t forget to pass the environ to it…
+### Extended Features
+- Support for commands with arguments (e.g., `ls -l`, `echo Hello`).
+- Search and execute commands using the `PATH` environment variable.
+- Implement built-in commands:
+  - `exit`: Exits the shell.
+  - `env`: Displays the current environment variables.
 
-2. Simple shell 0.2
-mandatory
-Simple shell 0.1 +
+---
 
-Handle command lines with arguments
+## Usage
+1. Clone this repository to your local machine:
+   ```bash
+   git clone https://github.com/your-username/simple_shell.git
+   
+2. Navigate to the project directory:
+    cd simple_shell
 
-3. Simple shell 0.3
-mandatory
-Simple shell 0.2 +
+3.Compile the source code:
+    gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o simple_shell
 
-Handle the PATH
-fork must not be called if the command doesn’t exist
+4. Run the shell:
+    ./simple_shell
 
-4. Simple shell 0.4
-mandatory
-Simple shell 0.3 +
+---
 
-Implement the exit built-in, that exits the shell
-Usage: exit
-You don’t have to handle any argument to the built-in exit
-
-5. Simple shell 1.0
-mandatory
-Simple shell 0.4 +
-
-Implement the env built-in, that prints the current environment
-
+## Authors:
+    Nadjib Mouhoun
 
